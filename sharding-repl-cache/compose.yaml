@@ -1,4 +1,4 @@
-name: mongo-sharding-repl
+name: sharding-repl-cache
 services:
   configSrv:
     image: mongo:latest
@@ -21,7 +21,8 @@ services:
         "27017"
       ] 
     healthcheck:
-      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      #test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      test: mongosh --port 27017 --eval "db.adminCommand('ping')"
       interval: 5s
       start_period: 10s
 
@@ -48,7 +49,8 @@ services:
         "27018"
       ]
     healthcheck:
-      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      #test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      test: mongosh --port 27018 --eval "db.adminCommand('ping')"
       interval: 5s
       start_period: 10s
 
@@ -75,7 +77,8 @@ services:
         "27019"
       ]
     healthcheck:
-      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      #test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      test: mongosh --port 27019 --eval "db.adminCommand('ping')"
       interval: 5s
       start_period: 10s
 
@@ -102,7 +105,8 @@ services:
         "27020"
       ]
     healthcheck:
-      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      #test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      test: mongosh --port 27020 --eval "db.adminCommand('ping')"
       interval: 5s
       start_period: 10s
 
@@ -129,7 +133,8 @@ services:
         "27021"
       ]
     healthcheck:
-      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      #test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      test: mongosh --port 27021 --eval "db.adminCommand('ping')"
       interval: 5s
       start_period: 10s
 
@@ -156,7 +161,8 @@ services:
         "27022"
       ]
     healthcheck:
-      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      #test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      test: mongosh --port 27022 --eval "db.adminCommand('ping')"
       interval: 5s
       start_period: 10s
 
@@ -183,7 +189,7 @@ services:
         "27023"
       ]
     healthcheck:
-      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      test: mongosh --port 27023 --eval "db.adminCommand('ping')"
       interval: 5s
       start_period: 10s        
 
@@ -208,7 +214,8 @@ services:
         "27024"
       ]
     healthcheck:
-      test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      #test: [ "CMD", "mongo", "--eval", "db.adminCommand('ping')" ]
+      test: mongosh --port 27024 --eval "db.adminCommand('ping')"
       interval: 5s
       start_period: 10s
 
@@ -228,6 +235,85 @@ services:
     environment:
       MONGODB_URL: "mongodb://mongos_router:27024"
       MONGODB_DATABASE_NAME: "somedb"
+      REDIS_URL: "redis://redis:6379"
+
+  redis1:
+    image: "redis:latest"
+    container_name: redis1
+    ports:
+      - "6379"
+    volumes:
+      - redis1_data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.26
+
+  redis2:
+    image: "redis:latest"
+    container_name: redis2
+    ports:
+      - "6379"
+    volumes:
+      - redis2_data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.27
+
+  redis3:
+    image: "redis:latest"
+    container_name: redis3
+    ports:
+      - "6379"
+    volumes:
+      - redis3_data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.28
+
+  redis4:
+    image: "redis:latest"
+    container_name: redis4
+    ports:
+      - "6379"
+    volumes:
+      - redis4_data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.29
+
+  redis5:
+    image: "redis:latest"
+    container_name: redis5
+    ports:
+      - "6379"
+    volumes:
+      - redis5_data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.30
+
+  redis6:
+    image: "redis:latest"
+    container_name: redis6
+    ports:
+      - "6379"
+    volumes:
+      - redis6_data:/data
+      - ./redis/redis.conf:/usr/local/etc/redis/redis.conf
+    command: [ "redis-server", "/usr/local/etc/redis/redis.conf" ]
+    networks:
+      app-network:
+        ipv4_address: 173.17.0.31
 
 networks:
   app-network:
@@ -245,3 +331,9 @@ volumes:
   mongodb1-1-data:
   mongodb1-2-data:
   mongodb1-3-data:
+  redis1_data:
+  redis2_data:
+  redis3_data:
+  redis4_data:
+  redis5_data:
+  redis6_data:

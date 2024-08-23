@@ -1,3 +1,4 @@
+name: mongo-sharding
 services:
   configSrv:
     image: mongo:latest
