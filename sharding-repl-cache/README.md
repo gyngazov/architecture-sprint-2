@@ -30,3 +30,7 @@ docker volume rm $(docker volume ls -q)
 Не отрабатывает запрос списка пользователей http://localhost:8080/helloDoc/users с ошибкой Internal Server Error. 
 Лог с ошибкой в файле error.log. 
 Остальные запросы отрабатывают.
+
+5. Схема
+
+Финальная схема в файле final-scheme.drawio.
