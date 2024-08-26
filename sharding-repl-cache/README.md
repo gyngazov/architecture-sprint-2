@@ -31,6 +31,7 @@ docker volume rm $(docker volume ls -q)
 Лог с ошибкой в файле error.log. 
 Остальные запросы отрабатывают.
 
+
 5. Схема
 
 Финальная схема в файле final-scheme.drawio.
